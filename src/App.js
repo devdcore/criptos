@@ -50,9 +50,8 @@ function App() {
         <Heading>
           Cotiza tus cryptomonedas
         </Heading>
-        <Formulario
         
-        />
+        <Formulario/>
       </div>
     </Contenedor>
   );
