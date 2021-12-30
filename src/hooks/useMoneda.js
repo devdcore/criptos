@@ -2,6 +2,8 @@ import React, {Fragment, useState} from 'react';
 
 const useMoneda = (label, stateInicial, opciones) => {
 
+    // Cambio para pull request
+
     // State de nuestro custom hook
     const [state, actualizarState] = useState(stateInicial);
 
