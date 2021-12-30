@@ -25,8 +25,6 @@ const Formulario = () => {
         { codigo: 'GBP', nombre: 'Libra Esterlina' }
     ]
 
-
-
     // Utilizar useMoneda
     const [moneda, SelectMonedas, actualizarState] = useMoneda('Elige tu moneda', '', MONEDAS);
       
