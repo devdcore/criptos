@@ -20,7 +20,7 @@ const Boton = styled.input`
         transition: .3s ease;
 `;
 
-const Formulario = ({guardarMoneda, guardarCriptoMoneda}) => {
+const Formulario = ({setMonedas}) => {
 
     const MONEDAS = [
         { codigo: 'USD', nombre: 'Dolar de los Estados Unidos' },
@@ -66,8 +66,10 @@ const Formulario = ({guardarMoneda, guardarCriptoMoneda}) => {
         // Cotiza
         guardarError(false);
 
-        guardarMoneda(moneda);
-        guardarCriptoMoneda(criptomoneda);
+        setMonedas({
+            moneda,
+            criptomoneda
+        })
 
     }
 
@@ -82,6 +84,9 @@ const Formulario = ({guardarMoneda, guardarCriptoMoneda}) => {
             <SelectMonedas />
             {/* Selecciona la crypto */}
             <SelectCripto />
+
+
+
             <Boton
                 type="submit"
                 value="Calcular"

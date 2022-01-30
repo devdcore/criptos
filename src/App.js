@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import imagen from './cryptomonedas.png';
 import Formulario from './components/Formulario';
 import axios from 'axios';
+import Resultado from './components/Resultado';
+import Spinner from './components/Spinner';
 
 
 const Contenedor = styled.div`
@@ -41,18 +43,39 @@ const Heading = styled.h1`
 
 function App() {
 
-  const [moneda, guardarMoneda] = useState('');
-  const [criptomoneda, guardarCriptoMoneda] = useState('');
-
-
+  const [monedas, setMonedas] = useState({});
+  const [resultado, setResultado ] = useState({});
+  const [sppiner, setsppiner] = useState(false);
+  
+     
   useEffect(() => {
+    if (Object.keys(monedas).length > 0 ) {
 
-    if (moneda === '') return;
+      const cotizarCripto = async () => {
+        // Sppiner
+        setsppiner(true);
+        // Set vacio resultado mientras carga
+        setResultado({});
 
-    // Consultar API para obtener la cotizacion
+        const {moneda, criptomoneda} = monedas
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+        const response = await fetch(url);
+        const result = await response.json();
+
+        // La respuesta viene con etiquetas dinamicas
+        //https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTN&tsyms=USD
+
+        setResultado(result.DISPLAY[criptomoneda][moneda]);
+        // Spiner
+        setsppiner(false);
+      }
+      cotizarCripto();
+    }
+
     
-
-  }, [moneda, criptomoneda])
+    // Consultar API para obtener la cotizacion    
+  }, [monedas])
 
 
   return (
@@ -66,12 +89,12 @@ function App() {
       <div>
         <Heading>
           Cotiza tus cryptomonedas
-        </Heading>
-        
+        </Heading> 
         <Formulario
-        guardarMoneda={guardarMoneda}
-        guardarCriptoMoneda={guardarCriptoMoneda}
-        />
+        setMonedas={setMonedas}
+        />        
+        { sppiner && <Spinner /> }
+        { resultado.PRICE && <Resultado resultado={resultado}/> }
       </div>
     </Contenedor>
   );
