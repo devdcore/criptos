@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import imagen from './cryptomonedas.png';
 import Formulario from './components/Formulario';
+import axios from 'axios';
+
 
 const Contenedor = styled.div`
   max-width: 900px;
@@ -38,6 +40,21 @@ const Heading = styled.h1`
 `;
 
 function App() {
+
+  const [moneda, guardarMoneda] = useState('');
+  const [criptomoneda, guardarCriptoMoneda] = useState('');
+
+
+  useEffect(() => {
+
+    if (moneda === '') return;
+
+    // Consultar API para obtener la cotizacion
+    
+
+  }, [moneda, criptomoneda])
+
+
   return (
     <Contenedor>
       <div>
@@ -51,7 +68,10 @@ function App() {
           Cotiza tus cryptomonedas
         </Heading>
         
-        <Formulario/>
+        <Formulario
+        guardarMoneda={guardarMoneda}
+        guardarCriptoMoneda={guardarCriptoMoneda}
+        />
       </div>
     </Contenedor>
   );
